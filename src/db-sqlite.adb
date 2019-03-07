@@ -90,7 +90,7 @@ package body DB.SQLite is
 
    overriding procedure Begin_Transaction (DB : in Handle) is
    begin
-      Logs.Write (Module, "begin");
+      --Logs.Write (Module, "begin");
       Execute (DB, "begin");
    end Begin_Transaction;
 
@@ -167,7 +167,7 @@ package body DB.SQLite is
    overriding procedure Close (DB : in out Handle) is
       Result : int;
    begin
-      Logs.Write (Module, "close");
+      --Logs.Write (Module, "close");
       SQLite_Safe.Close (DB, Result);
       Check_Result ("close", Result);
    end Close;
@@ -178,7 +178,7 @@ package body DB.SQLite is
 
    overriding procedure Commit (DB : in Handle) is
    begin
-      Logs.Write (Module, "commit");
+      --Logs.Write (Module, "commit");
       Execute (DB, "commit");
    end Commit;
 
@@ -196,7 +196,7 @@ package body DB.SQLite is
 
       Result : int;
    begin
-      Logs.Write (Module, "connect " & Logs.NV ("Name", Name));
+      --Logs.Write (Module, "connect " & Logs.NV ("Name", Name));
       SQLite_Safe.Open (DB, Name, Result);
       Check_Result ("connect", Result);
    end Connect;
@@ -207,7 +207,7 @@ package body DB.SQLite is
 
    overriding procedure End_Select (Iter : in out Iterator) is
    begin
-      Logs.Write (Module, "end_select");
+      --Logs.Write (Module, "end_select");
       Check_Result ("end_select_reset",
                     sqlite3_h.sqlite3_reset (Iter.S.all'Address));
       Check_Result ("end_select",
@@ -220,7 +220,7 @@ package body DB.SQLite is
 
    overriding procedure Execute (DB : in Handle; SQL : in String) is
    begin
-      Logs.Write (Module, "execute : " & Logs.NV ("SQL", SQL));
+      --Logs.Write (Module, "execute : " & Logs.NV ("SQL", SQL));
       SQLite_Safe.Exec (DB, SQL);
    exception
       when DB_Error =>
@@ -297,7 +297,7 @@ package body DB.SQLite is
 
    overriding procedure Rollback (DB : in Handle) is
    begin
-      Logs.Write (Module, "rollback");
+      --Logs.Write (Module, "rollback");
       Execute (DB, "rollback");
    end Rollback;
 
@@ -442,8 +442,8 @@ package body DB.SQLite is
       begin
          pragma Assert (Select_Iter in Iterator);
 
-         Logs.Write
-           (Module, "prepare select : " & Logs.NV ("SQL", SQL));
+         --Logs.Write
+         --  (Module, "prepare select : " & Logs.NV ("SQL", SQL));
 
          Iterator (Select_Iter).H := DB;
          Iterator (Select_Iter).More := False;
